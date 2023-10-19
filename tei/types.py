@@ -8,6 +8,7 @@ from tei.errors import ValidationError
 class EmbedRequest(BaseModel):
     # Prompt
     inputs: str
+    truncate: bool = False
 
     @validator("inputs")
     def valid_input(cls, v):

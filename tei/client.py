@@ -69,6 +69,7 @@ class Client:
     def embed(
         self,
         inputs: str,
+        truncate: bool = False,
     ) -> List[List[float]]:
         """
         Given a prompt, generate the following text
@@ -80,7 +81,7 @@ class Client:
         Returns:
             List[List[float]]: embedding for the text
         """
-        request = EmbedRequest(inputs=inputs)
+        request = EmbedRequest(inputs=inputs, truncate=truncate)
 
         resp = requests.post(
             self.base_url + "/embed",
