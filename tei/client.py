@@ -1,9 +1,7 @@
-import json
 import requests
 
 from aiohttp import ClientSession, ClientTimeout
-from pydantic import ValidationError
-from typing import Dict, Optional, List, AsyncIterator, Iterator
+from typing import Dict, Optional, List
 
 from tei.types import (
     EmbedRequest, InfoResponse,
@@ -85,7 +83,7 @@ class Client:
 
         resp = requests.post(
             self.base_url + "/embed",
-            json=request.dict(),
+            json=request.model_dump(),
             headers=self.headers,
             cookies=self.cookies,
             timeout=self.timeout,
@@ -170,7 +168,7 @@ class AsyncClient:
         async with ClientSession(
             headers=self.headers, cookies=self.cookies, timeout=self.timeout
         ) as session:
-            async with session.post(self.base_url, json=request.dict()) as resp:
+            async with session.post(self.base_url, json=request.model_dump()) as resp:
                 payload = await resp.json()
 
                 if resp.status != 200:

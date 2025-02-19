@@ -1,8 +1,5 @@
-from enum import Enum
-from pydantic import BaseModel, validator
-from typing import Optional, List
-
-from tei.errors import ValidationError
+from pydantic import BaseModel, field_validator
+from typing import Optional
 
 
 class EmbedRequest(BaseModel):
@@ -10,10 +7,10 @@ class EmbedRequest(BaseModel):
     inputs: str
     truncate: bool = False
 
-    @validator("inputs")
+    @field_validator("inputs")
     def valid_input(cls, v):
         if not v:
-            raise ValidationError("`inputs` cannot be empty")
+            raise ValueError("`inputs` cannot be empty")
         return v
 
 
